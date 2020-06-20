@@ -1,10 +1,12 @@
--- auto-generated definition
-create table student
-(
-    id     int auto_increment
-        primary key,
-    name   varchar(63) default '' null,
-    age    int         default 0  not null,
-    mobile varchar(11) default '' null
-);
+CREATE DATABASE IF NOT EXISTS different2
 
+USE different2
+
+-- auto-generated definition
+CREATE TABLE student
+(
+    id  INT AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(63) DEFAULT '' NULL,
+    age    INT DEFAULT 0  NOT NULL,
+    mobile VARCHAR(11) DEFAULT '' NULL
+);
