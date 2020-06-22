@@ -9,8 +9,6 @@ import java.sql.SQLException;
  * @Created by haoqi
  */
 public class DbUtil {
-
-
     public static final String URL = "jdbc:mysql://localhost:3306/";
     public static final String databaseName = "different";
     public static final String USER = "root";

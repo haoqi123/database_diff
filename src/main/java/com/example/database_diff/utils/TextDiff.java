@@ -22,12 +22,14 @@ public class TextDiff {
         Map<String, Map<String, Map<String, Object>>> diffTable = diffTable(tables1, tables2);
 
         //key 表名
-        //value 字段map
+        //value 字段的maps集合
         tables1.forEach((key, value) -> {
             Map<String, Map<String, Object>> lackField = diffLackField(value, tables2.get(key));
             Map<String, Map<String, Object>> diffField = diffField(value, tables2.get(key));
             lackField.putAll(diffField);
-            diffTable.put(key, lackField);
+            if (!lackField.isEmpty()) {
+                diffTable.put(key, lackField);
+            }
         });
         return diffTable;
     }

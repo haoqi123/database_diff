@@ -22,6 +22,7 @@ import java.util.*;
 @RequestMapping("sql")
 public class SqlDifferenceController {
     private static final String SHOW_TABLE = "SHOW TABLES";
+    private static final String SHOW_TABLE_NOT_VIEW = "SHOW FULL TABLES WHERE Table_type != 'VIEW'";
     private static final String SHOW_COLUMN = "SHOW COLUMNS FROM ";
 
     public Statement getStatement(Connection connection) throws SQLException {
@@ -29,11 +30,11 @@ public class SqlDifferenceController {
     }
 
     public ResultSet getResultV1() throws SQLException {
-        return getStatement(DbUtil.getConnection()).executeQuery(SHOW_TABLE);
+        return getStatement(DbUtil.getConnection()).executeQuery(SHOW_TABLE_NOT_VIEW);
     }
 
     public ResultSet getResultV2() throws SQLException {
-        return getStatement(DbUtilV2.getConnection()).executeQuery(SHOW_TABLE);
+        return getStatement(DbUtilV2.getConnection()).executeQuery(SHOW_TABLE_NOT_VIEW);
     }
 
     public String tableName() {
