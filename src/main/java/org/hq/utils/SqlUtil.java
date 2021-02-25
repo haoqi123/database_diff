@@ -15,6 +15,7 @@ public class SqlUtil {
 
     public static final String TABLE_NAME = "TABLE_NAME";
     public static final String SHOW_CREATE_TABLE = "SHOW CREATE TABLE `$1`";
+    public static final String SHOW_INDEX_FROM = "SHOW INDEX FROM `$1`";
     public static final String SHOW_TABLE_NOT_VIEW = "SHOW FULL TABLES WHERE Table_type != 'VIEW'";
     public static final String SHOW_VIEW = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.VIEWS WHERE TABLE_SCHEMA = '$1' ORDER BY TABLE_NAME ASC";
     public static final String SHOW_ROUTINES = "SELECT SPECIFIC_NAME,ROUTINE_TYPE,ROUTINE_DEFINITION,ROUTINE_COMMENT FROM information_schema.ROUTINES WHERE ROUTINE_SCHEMA = '$1' ORDER BY ROUTINE_NAME";
@@ -46,5 +47,9 @@ public class SqlUtil {
 
     public static String getTableDetails(String tableName) {
         return SHOW_CREATE_TABLE.replace("$1", tableName.trim());
+    }
+
+    public static String getTableIndex(String tableName) {
+        return SHOW_INDEX_FROM.replace("$1", tableName.trim());
     }
 }

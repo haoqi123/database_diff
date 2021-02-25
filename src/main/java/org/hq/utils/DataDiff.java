@@ -96,49 +96,4 @@ public class DataDiff {
         });
         return diffTable;
     }
-
-    public static void diffField(HashMap<ColumnType, String> _new, HashMap<ColumnType, String> _old) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("alter column head_rp set default '';");
-        for (ColumnType fieldType : ColumnType.columnTypes()) {
-            Object value1 = _new.get(fieldType);
-            Object value2 = _old.get(fieldType);
-
-            if (!compareFieldVal(value1, value2)) {
-
-            }
-        }
-    }
-
-    private static Map<String, Map<String, Object>> transform(Map<String, Map<ColumnType, Object>> map) {
-        Map<String, Map<String, Object>> hashMap = new HashMap<>();
-        map.forEach((a, b) -> hashMap.put(a, transformField(b)));
-        return hashMap;
-    }
-
-    private static Map<String, Object> transformField(Map<ColumnType, Object> map) {
-        Map<String, Object> hashMap = new HashMap<>();
-        map.forEach((a, b) -> hashMap.put(a.name(), b));
-        return hashMap;
-    }
-
-    public static Map<String, Object> diffRoutines(Map<String, String> source, Map<String, String> target) {
-        Map<String, Object> diff = new HashMap<>();
-        source.forEach((key, value) -> {
-            if (!target.containsKey(key)) {
-                diff.put(key, value);
-                return;
-            }
-            String targetVal = target.get(key);
-            if (!value.equalsIgnoreCase(targetVal)) {
-                Map<String, String> map = new HashMap<>();
-                map.put(SqlUtil.SOURCE, value);
-                map.put(SqlUtil.TARGET, targetVal);
-                diff.put(key, map);
-            }
-        });
-        return diff;
-    }
-
-
 }

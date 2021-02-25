@@ -15,7 +15,7 @@ public class ApplicationMain {
         //加一个true相当于flush
         //控制台到文件
         System.setOut(new PrintStream(new BufferedOutputStream(
-                new FileOutputStream("d:/print.sql")), true));
+                new FileOutputStream(DataConnect.FILE_PATH)), true));
 
         try {
             System.out.println(Table.getDiffTables());

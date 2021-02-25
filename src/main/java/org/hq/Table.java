@@ -68,50 +68,7 @@ public class Table {
             //fieldsKey 字段名称
             //fieldsValue 属性/值集合
             ((HashMap) diffFields).forEach((fieldsKey, fieldsValue) -> {
-
-                HashMap field = (HashMap) fieldsValue;
-                StringBuilder builder = new StringBuilder();
-                HashMap<ColumnType, String> fieldVal;
-                if (field.keySet().size() == 2) {
-                    //存在字段差异
-                    fieldVal = (HashMap<ColumnType, String>) field.get(SqlUtil.SOURCE);
-                    builder.append("alter table ")
-                            .append(fieldVal.get(ColumnType.TableName))
-                            .append(" modify ");
-
-                } else {
-                    fieldVal = (HashMap<ColumnType, String>) field;
-                    builder.append("alter table ")
-                            .append(fieldVal.get(ColumnType.TableName))
-                            .append(" add ");
-                }
-
-                builder.append(fieldVal.get(ColumnType.Field))
-                        .append(" ")
-                        .append(fieldVal.get(ColumnType.Type));
-                if (!StringUtils.isEmpty(fieldVal.get(ColumnType.Default))) {
-                    builder.append(" default ");
-                    if (StringUtils.contains(fieldVal.get(ColumnType.Default), "'")) {
-                        builder.append(fieldVal.get(ColumnType.Default));
-                    } else {
-                        builder.append("'").append(fieldVal.get(ColumnType.Default)).append("'");
-                    }
-                }
-
-                if (!StringUtils.isEmpty(fieldVal.get(ColumnType.Extra))) {
-                    builder.append(" ").append(fieldVal.get(ColumnType.Extra));
-                }
-
-                if (StringUtils.contains(fieldVal.get(ColumnType.Null), "YES")) {
-                    builder.append(" NULL ");
-                } else {
-                    builder.append(" NOT NULL ");
-                }
-
-                if (!StringUtils.isEmpty(fieldVal.get(ColumnType.Comment))) {
-                    builder.append("comment '").append(fieldVal.get(ColumnType.Comment)).append("'");
-                }
-                joiner.add(builder.toString());
+                joiner.add(getColumns(fieldsValue));
             });
         });
 
@@ -153,4 +110,49 @@ public class Table {
         return tables;
     }
 
+    private static String getColumns(Object fieldsValue) {
+        StringBuilder builder = new StringBuilder();
+        HashMap field = (HashMap) fieldsValue;
+        HashMap<ColumnType, String> fieldVal;
+        if (field.keySet().size() == 2) {
+            //存在字段差异
+            fieldVal = (HashMap<ColumnType, String>) field.get(SqlUtil.SOURCE);
+            builder.append("alter table ")
+                    .append(fieldVal.get(ColumnType.TableName))
+                    .append(" modify ");
+
+        } else {
+            fieldVal = (HashMap<ColumnType, String>) field;
+            builder.append("alter table ")
+                    .append(fieldVal.get(ColumnType.TableName))
+                    .append(" add ");
+        }
+
+        builder.append(fieldVal.get(ColumnType.Field))
+                .append(" ")
+                .append(fieldVal.get(ColumnType.Type));
+        if (!StringUtils.isEmpty(fieldVal.get(ColumnType.Default))) {
+            builder.append(" default ");
+            if (StringUtils.contains(fieldVal.get(ColumnType.Default), "'")) {
+                builder.append(fieldVal.get(ColumnType.Default));
+            } else {
+                builder.append("'").append(fieldVal.get(ColumnType.Default)).append("'");
+            }
+        }
+
+        if (!StringUtils.isEmpty(fieldVal.get(ColumnType.Extra))) {
+            builder.append(" ").append(fieldVal.get(ColumnType.Extra));
+        }
+
+        if (StringUtils.contains(fieldVal.get(ColumnType.Null), "YES")) {
+            builder.append(" NULL ");
+        } else {
+            builder.append(" NOT NULL ");
+        }
+
+        if (!StringUtils.isEmpty(fieldVal.get(ColumnType.Comment))) {
+            builder.append("comment '").append(fieldVal.get(ColumnType.Comment)).append("'");
+        }
+        return builder.toString();
+    }
 }
