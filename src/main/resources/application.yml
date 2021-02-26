@@ -12,4 +12,5 @@ target:
     password: 123456
     schema-name: different2
 
-filepath: d:/print.sql
+filepath: \print.sql
+enableIndex: false

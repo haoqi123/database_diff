@@ -9,10 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * TODO 将结果生成sql文件，可执行
  *
- * @Date 2020/6/13 8:53 上午
- * @Created by haoqi
  */
 public class DataDiff {
 
